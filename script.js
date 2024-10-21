@@ -9,7 +9,7 @@ const height = header.offsetHeight;
 
 function initializeTabs() {
     // Set the "Home" tab as default
-    const defaultTabName = "Home";
+    const defaultTabName = "HOME";
 
     // Update styles and content for the default tab
     updateTabStyles(tabs, defaultTabName);
@@ -22,10 +22,10 @@ function updateTabStyles(tabs, selectedTabName) {
 
         if (tabName === selectedTabName) {
             tab.style.textDecoration = "underline"; // Highlight the selected tab
-            tab.style.color = "navy";
+            tab.style.color = "black";
         } else {
             tab.style.textDecoration = "none"; // Reset other tabs
-            tab.style.color = "#000042";
+            tab.style.color = "rgb(31, 49, 31)";
         }
     });
 }
@@ -36,7 +36,7 @@ function updateTabContent(selectedTabName) {
     tabContents.forEach(tabContent => {
         const tabName = tabContent.id;
         // const tabName = selectedTabName.replace(/ /g, "-");
-        if (tabName === selectedTabName.replace(/ /g, "-")) {
+        if (tabName === selectedTabName.toLowerCase().replace(/ /g, "-")) {
             tabContent.style.display = "block"; // Highlight the selected tab
         } else {
             tabContent.style.display = "none"; // Reset other tabs
@@ -52,14 +52,51 @@ function addingEventListener() {
     tabs.forEach(tab => {
         tab.addEventListener("click", function() {
             const tabName = tab.textContent;
+            
+            // Remove active class from all tabs
+            tabs.forEach(t => t.classList.remove('active-tab'));
+
+            // Add active class to the clicked tab
+            tab.classList.add('active-tab');
 
             // Call the function to update tab styles
             updateTabStyles(tabs, tabName);
             updateTabContent(tabName)
         });
-        // tab.addEventListener("mouseover", function() {
-        //     tab.style.cursor = "pointer";
-        // })
+        
+        tab.addEventListener("mouseover", function() {
+            if (!tab.classList.contains('active-tab')) {
+                // Apply hover styles only if the tab is not active
+                tab.style.color = "black";
+                tab.style.textDecoration = "underline";
+            }
+        });
+
+        tab.addEventListener("mouseout", function() {
+            if (!tab.classList.contains('active-tab')) {
+                // Revert hover styles only if the tab is not active
+                tab.style.color = "";
+                tab.style.textDecoration = "";
+            }
+        });
+
+    });
+}
+
+function logoZoom() {
+    const logos = document.querySelectorAll('footer img');
+
+    // Loop through each <h2> element and attach an event listener
+    logos.forEach(logo => {
+        
+        logo.addEventListener("mouseover", function() {
+            logo.style.width = "50px";
+        });
+
+        logo.addEventListener("mouseout", function() {
+            logo.style.width = "30px";
+        });
+
     });
 }
 
@@ -120,3 +157,4 @@ document.addEventListener('scroll', function() {
 initializeTabs();
 addingEventListener();
 addDodgerEvents();
+logoZoom();

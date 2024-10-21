@@ -1,14 +1,15 @@
 body {
-    /* background-image: url("./img/background/background2.jpeg");
+    /* background-image: url("./img/background/pine_paneling.jpeg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat; */
     text-align: center;
+    background-color: rgb(31, 49, 31);
     /* font-family: 'Trebuchet MS'; */
     padding-top: 250px;
     /* font-family:'Garamond'; */
     /* font-family: 'Candara'; */
-    font-family: 'Perpetua';
+    font-family: 'Candara';
     padding-bottom: 100px;
     /* font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif */
     /* font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif */
@@ -17,7 +18,8 @@ body {
 header {
   position: fixed;
   background-color: white;
-  color: #000042;
+  /* color: #000042; */
+  color: rgb(31, 49, 31);
   width: 100%;
   top: 0;
   left: 0;
@@ -25,6 +27,11 @@ header {
   border-bottom: 2px solid black;
   /* transition: height 0.3s ease; Smooth transition */
 }
+
+/* header h1 {
+  background-color: rgb(31, 49, 31);
+  color: white;
+} */
 
 #window {
   position: absolute;
@@ -48,31 +55,43 @@ header.minimized .minimized-content {
   display: none; /* Hide other header content */
 }
 
-footer {
-  position: fixed;
-  background-color: white;
-  color: navy;
-  width: 100%;
-  bottom: 0;
-  border-top: 2px solid black;
-}
-
 h1 {
-  font-size: 50px;
+  font-size: 60px;
+  margin: 0px;
 }
 
 h2 {
-  font-size: 30px;
-  /* font-family: 'Copperplate'; */
+  font-size: 20px;
+  /* color: rgb(188, 71, 71); */
+  /* font-family: 'Avant Garde'; */
 }
 
 h3 {
-  font-size: 20px;
+  font-size: 25px;
+  color: rgb(188, 71, 71);
 }
 
-#Home img {
-  /* width: 100vw; */
-  height: calc(100vh - 350px);
+h4 {
+  font-size: 20px;
+  color: gray;
+  /* padding-left: 20px; */
+}
+
+#intro {
+  position: relative;
+  margin-bottom: 0px;
+  left: -200px;
+}
+
+p {
+  font-size: 20px;
+  color: white;
+}
+
+#home img {
+  top: 250px;
+  padding-top: 0px;
+  /* height: calc(100vh - 350px); */
   max-width: 100%;
   /* object-fit: contain; */
 }
@@ -112,7 +131,7 @@ header.minimized .tab-names {
   bottom: 0px;
 }
 
-#Game {
+#fun {
   background-color: #111;
   height: 400px;
   margin: 0 auto;
@@ -126,61 +145,58 @@ header.minimized .tab-names {
   position: relative;
   display: flex;
   align-items: center;
+  width: 100%;
 }
 
-.row-item img {
+.image-container {
+  position: relative;
   width: 50%;
+}
+
+.image-container img{
+  width: 100%;
+}
+
+.image-container img:hover {
+  cursor: pointer;
 }
 
 .row-item p {
   flex: 1;
 }
 
-/* .about-img, #About-Me.row-item p {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    max-width: 50%;
-} */
-
-/* #About-Me.row-item.about-img img {
-  width: 50%;
-} */
-
-/* .about-img img {
-  max-width: 50%;
-  cursor: pointer;
-} */
-
-/* .image-description {
+.overlay {
   position: absolute;
-  bottom: 0; 
+  top: 0;
   left: 0;
-  right: 0;
-  display: none; 
-  background-color: rgba(0, 0, 0, 0.7); 
-  color: white;
-  max-width: 100%;
-  box-sizing: border-box;
-  padding: 10px;
-} */
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  color: white; /* Text color */
+  opacity: 0; /* Initially hide the overlay */
+  transition: opacity 0.3s ease; /* Smooth transition */
+}
 
-/* .row-item:hover .image-description {
-  display: block;
-} */
+.image-container:hover .overlay {
+  opacity: 1; /* Show the overlay on hover */
+}
 
-/* .about-img {
-  max-width: 50%;
-  cursor: pointer;
-} */
-
-/* .row-item:hover img {
-  display: none;
-} */
+footer {
+  left: 0;
+  position: fixed;
+  background-color: white;
+  width: 100%;
+  bottom: 0;
+  padding-top: 10px;
+  border-top: 4px solid black;
+}
 
 footer div {
   float: left;
+  margin: 10px;
 }
 footer img {
   width: 30px;
