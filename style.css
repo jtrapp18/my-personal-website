@@ -1,3 +1,7 @@
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
 body {
     /* background-image: url("./img/background/pine_paneling.jpeg");
     background-size: cover;
@@ -7,10 +11,13 @@ body {
     background-color: rgb(31, 49, 31);
     /* font-family: 'Trebuchet MS'; */
     padding-top: 250px;
+    padding-bottom: 0px;
+    margin: 0px;
     /* font-family:'Garamond'; */
     /* font-family: 'Candara'; */
     font-family: 'Candara';
-    padding-bottom: 100px;
+    /* padding-bottom: 100px; */
+    align-items: center;
     /* font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif */
     /* font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif */
   }
@@ -23,7 +30,10 @@ header {
   width: 100%;
   top: 0;
   left: 0;
+  padding: 0;
   z-index: 1000;
+  height: 250px;
+  box-sizing: border-box;
   border-bottom: 2px solid black;
   /* transition: height 0.3s ease; Smooth transition */
 }
@@ -88,11 +98,29 @@ p {
   color: white;
 }
 
+#home{
+  display: flex;
+  /* top: 250px; */
+  left: 0px;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  height: calc(100vh - 310px);
+  width: 100%;
+  align-items: center;
+  box-sizing: border-box;
+  /* object-fit: contain; */
+}
+
 #home img {
-  top: 250px;
-  padding-top: 0px;
+  /* top: 250px; */
+  padding: 0;
+  margin: 0;
   /* height: calc(100vh - 350px); */
-  max-width: 100%;
+  height: 100%;
+  width: 100%;
+  /* width: auto; */
+  object-fit: cover;
   /* object-fit: contain; */
 }
 
@@ -105,7 +133,6 @@ p {
 .tab-names {
   display: flex;
   justify-content: center;
-  align-items: center;
   height: 100%;
 }
 
@@ -190,7 +217,9 @@ footer {
   background-color: white;
   width: 100%;
   bottom: 0;
-  padding-top: 10px;
+  height: 60px;
+  padding-bottom: 15px;
+  box-sizing: border-box;
   border-top: 4px solid black;
 }
 

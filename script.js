@@ -67,7 +67,8 @@ function addingEventListener() {
         tab.addEventListener("mouseover", function() {
             if (!tab.classList.contains('active-tab')) {
                 // Apply hover styles only if the tab is not active
-                tab.style.color = "black";
+                tab.style.color = "rgb(188, 71, 71)";
+                tab.style.size = "40px";
                 tab.style.textDecoration = "underline";
             }
         });
@@ -76,6 +77,7 @@ function addingEventListener() {
             if (!tab.classList.contains('active-tab')) {
                 // Revert hover styles only if the tab is not active
                 tab.style.color = "";
+                tab.style.size = "";
                 tab.style.textDecoration = "";
             }
         });
@@ -90,7 +92,7 @@ function logoZoom() {
     logos.forEach(logo => {
         
         logo.addEventListener("mouseover", function() {
-            logo.style.width = "50px";
+            logo.style.width = "40px";
         });
 
         logo.addEventListener("mouseout", function() {
@@ -134,7 +136,7 @@ const imgElement = document.querySelector('#view');
 
 function change() {
     imgElement.src = `./img/view/${images[index]}.jpg`;
-    index > 1 ? index = 0 : index++;
+    index > 2 ? index = 0 : index++;
 }
 
 window.onload = function () {
