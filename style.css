@@ -133,12 +133,13 @@ p {
 .tab-names {
   display: flex;
   justify-content: center;
-  height: 100%;
 }
 
 .tab-names h2 {
   padding-left: 5%;
   padding-right: 5%;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
   cursor: pointer;
 }
 
@@ -231,3 +232,24 @@ footer img {
   width: 30px;
 }
 
+
+#play div {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+}
+
+#play div h3 {
+  padding-left: 5%;
+  padding-right: 5%;
+  cursor: pointer;
+}
+
+#robot-selections h3 {
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+#new-prediction {
+  cursor: pointer;
+}

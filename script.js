@@ -154,9 +154,207 @@ document.addEventListener('scroll', function() {
     }
   });
 
-  
+
+function scoreExact(actual, predicted) {
+    const actual_tracked = [...actual]
+    const pred_tracked = [...predicted]
+    const score = []
+    const progress = {'score': score, 'actual': actual_tracked, 'predicted': pred_tracked}
+    
+    for (let p = 0; p <pred_tracked.length; p++) {
+        if (pred_tracked[p] === actual_tracked[p]) {
+            score[p] = 2
+            actual_tracked.splice(p, 1, 0) //remove match from consideration for next round
+            pred_tracked.splice(p, 1, 0) //remove match from consideration for next round
+        }
+        else {score[p] = 0}
+    }
+    return progress
+
+}
+
+function scorePartial(progress) {
+    const score = progress['score']
+    const actual_tracked = progress['actual']
+    const pred_tracked = progress['predicted']
+    
+    for (let p = 0; p <pred_tracked.length; p++) {
+        for (let a = 0; a<actual_tracked.length; a++) {
+            if (pred_tracked[p] > 0) { // 0 indicates item has already been checked
+                if (pred_tracked[p] === actual_tracked[a]) {
+                    score[p] = 1
+                    actual_tracked.splice(a, 1, 0)
+                    break
+                }
+                else {
+                    score[p] = 0
+                }
+            }
+        }
+        pred_tracked[p] = 0 // mark that item has been checked (no impact)
+    }
+    return score
+
+}
+
+function shuffle(score) {
+    const score_shuffled = score.filter((i) => i>0)
+
+    for (let i = score_shuffled.length - 1; i > 0; i--) {
+        // Generate a random index from 0 to i
+        const j = Math.floor(Math.random() * (i + 1));
+        // Swap elements at index i and j
+        [score_shuffled[i], score_shuffled[j]] = [score_shuffled[j], score_shuffled[i]];
+    }
+    return score_shuffled;
+}
+
+function playRound(actual, predicted) {
+    progress = scoreExact(actual, predicted)
+    score = scorePartial(progress)
+    scoreShuffled = shuffle(score)
+
+    return scoreShuffled
+}
+
+const game = document.querySelector("#play")
+
+function initiateNewGame() {
+    optionsList = []
+    const robotSelections = document.createElement("div")
+    robotSelections.id = "robot-selections"
+    robotSelections.style.display = "none"
+    game.append(robotSelections)
+
+    const choices = document.querySelectorAll("#user-choices h3");
+
+    choices.forEach(choice => {
+        itm = choice.textContent
+        optionsList.push(itm)
+    })
+
+    let randomItem
+    for (let a = 0; a < 5; a++) {
+        randomItem = optionsList[Math.floor(Math.random() * optionsList.length)];
+
+        const robotSelection = document.createElement("h3")
+        robotSelection.textContent = randomItem
+        robotSelections.append(robotSelection)
+    }
+}
+
+function addOptionClickEvent(event) {
+    // alert("something happened!")
+    const currentRound = document.querySelector("#current-round");
+    const newSelections = document.querySelector("#current-round .user-selections")
+    const selections = document.querySelectorAll("#current-round .user-selections h3");
+
+    if (selections.length < 5) {
+        // const itm = choice.textContent;
+        const itm = event.target.textContent;
+
+        const newSelection = document.createElement("h3");
+        newSelection.textContent = itm
+        newSelections.append(newSelection)
+        }
+    else {
+        alert("reached maximum selections")
+   }
+
+   if (selections.length === 4) {
+        const button = document.createElement("button");
+        
+        // add attributes to new button
+        button.textContent = "Final Answer!"
+        button.style.cursor = "pointer";
+        button.style.position = "relative"
+        button.style.left = "20%"
+        
+        currentRound.append(button)
+        button.addEventListener("click", checkPredictions)
+    }
+}
+
+function initiateNewRound() {
+    const newRound = document.createElement("div")
+    newRound.style.backgroundColor = "white"
+    newRound.className = "rounds"
+    newRound.id = "current-round"
+    
+    game.append(newRound)
+
+    const currentRound = document.querySelector("#current-round");
+    const newSelections = document.createElement("div");
+    
+    // fill in attributes
+    newSelections.className = "user-selections"
+    newSelections.style.position = "relative"
+    newSelections.style.left = "-20%"
+
+    currentRound.append(newSelections)
+
+    const choices = document.querySelectorAll("#user-choices h3");
+
+    choices.forEach(choice => {
+        choice.addEventListener("click", addOptionClickEvent);
+})
+}
+
+const newPredButton = document.querySelector("#new-prediction")
+newPredButton.addEventListener("click", initiateNewRound)
+
+function checkPredictions() {
+    const currentRound = document.querySelector("#current-round");
+    const predicted = []
+
+    const selections = document.querySelectorAll("#current-round .user-selections h3");
+    selections.forEach(selection => {
+        const itm = selection.textContent
+        predicted.push(itm)
+    })
+
+    const actual = []
+
+    const actuals = document.querySelectorAll("#robot-selections h3");
+    actuals.forEach(selection => {
+        const act = selection.textContent
+        actual.push(act)
+    })
+
+    scoresShuffled = playRound(actual, predicted)
+
+    score_code = {1: "red",
+        2: "black"}
+
+    const newResults = document.createElement("div");
+    newResults.className = "user-results"
+    currentRound.append(newResults)
+    
+    scoresShuffled.forEach(score => {
+        color_code = score_code[score]
+
+        const newResult = document.createElement("h3");
+        newResult.textContent = "o"
+        newResult.style.color = color_code
+        newResults.append(newResult)
+    })
+
+    // reset round
+    const button = document.querySelector("#current-round button");
+    button.style.display = "none"
+
+    currentRound.id = ''
+
+    const choices = document.querySelectorAll("#user-choices h3");
+
+    choices.forEach(choice => {
+        choice.removeEventListener("click", addOptionClickEvent); // Remove previous listeners to prevent duplicates
+    });
+}
 
 initializeTabs();
 addingEventListener();
 addDodgerEvents();
 logoZoom();
+initiateNewGame();
+// addUserPrediction();
