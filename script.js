@@ -154,6 +154,7 @@ document.addEventListener('scroll', function() {
     }
   });
 
+  // Game play ****************************************************************************************************
 
 function scoreExact(actual, predicted) {
     const actual_tracked = [...actual]
@@ -180,7 +181,7 @@ function scorePartial(progress) {
     
     for (let p = 0; p <pred_tracked.length; p++) {
         for (let a = 0; a<actual_tracked.length; a++) {
-            if (pred_tracked[p] > 0) { // 0 indicates item has already been checked
+            if (pred_tracked[p] != 0) { // 0 indicates item has already been checked
                 if (pred_tracked[p] === actual_tracked[a]) {
                     score[p] = 1
                     actual_tracked.splice(a, 1, 0)
@@ -193,6 +194,7 @@ function scorePartial(progress) {
         }
         pred_tracked[p] = 0 // mark that item has been checked (no impact)
     }
+
     return score
 
 }
@@ -218,134 +220,185 @@ function playRound(actual, predicted) {
 }
 
 const game = document.querySelector("#play")
+const theme = document.querySelector("#theme").textContent
+const score_code = {1: "Partial Match", 2: "Exact Match"}
+
+// import gameThemes from './game_themes.json';
 
 function initiateNewGame() {
-    optionsList = []
-    const robotSelections = document.createElement("div")
-    robotSelections.id = "robot-selections"
+    optionsList = ["option1", "option2", "option3", "option4", "option5"]
+    const choices = document.querySelector("#user-choices"); 
+
+    optionsList.forEach(option => {
+        const newOption = document.createElement("img")
+        newOption.src = `./img/game/${theme}/${option}.png`
+        newOption.className = "game-icons"
+
+        choices.append(newOption)
+
+        newOption.addEventListener("mouseover", function() {
+            newOption.style.width = "50px";
+            newOption.style.height = "50px";
+        });
+
+        newOption.addEventListener("mouseout", function() {
+            newOption.style.width = "30px";
+            newOption.style.height = "30px";
+        });
+
+    })
+
+    const resultKey = document.querySelector("#result-key");
+    const allScores = [1, 2]
+    allScores.forEach(score => {
+        const resultType = score_code[score]
+        const fileName = resultType.toLowerCase().replace(/ /g, "_")
+
+        const newLabel = document.createElement("h2");
+        newLabel.textContent = `${resultType}:`
+        resultKey.append(newLabel)
+ 
+        const newResult = document.createElement("img");
+        newResult.src = `./img/game/${theme}/${fileName}.png`
+        newResult.alt = fileName
+        newResult.className = "game-icons"
+
+        resultKey.append(newResult)
+    })
+
+    const robotSelections = document.getElementById("robot-selections")
     robotSelections.style.display = "none"
     game.append(robotSelections)
-
-    const choices = document.querySelectorAll("#user-choices h3");
-
-    choices.forEach(choice => {
-        itm = choice.textContent
-        optionsList.push(itm)
-    })
 
     let randomItem
     for (let a = 0; a < 5; a++) {
         randomItem = optionsList[Math.floor(Math.random() * optionsList.length)];
 
-        const robotSelection = document.createElement("h3")
-        robotSelection.textContent = randomItem
+        const robotSelection = document.createElement("img")
+        robotSelection.src = `./img/game/${theme}/${randomItem}.png`
+        robotSelection.alt = randomItem
+        robotSelection.className = "game-icons"
         robotSelections.append(robotSelection)
     }
+
+    // add events to buttons
+    const newPredButton = document.getElementById("new-prediction");
+    newPredButton.addEventListener("click", initiateNewRound)
+
+    const showAnsButton = document.getElementById("show-answer");
+    showAnsButton.addEventListener("click", function(event) {
+        curr = event.target.textContent
+        if (curr === "Show Answer"){
+            showAnsButton.textContent = "Hide Answer"
+            robotSelections.style.display = "flex"}
+        else {
+            showAnsButton.textContent = "Show Answer"
+            robotSelections.style.display = "none"}
+        })
 }
 
 function addOptionClickEvent(event) {
     // alert("something happened!")
     const currentRound = document.querySelector("#current-round");
     const newSelections = document.querySelector("#current-round .user-selections")
-    const selections = document.querySelectorAll("#current-round .user-selections h3");
+    const selections = document.querySelectorAll("#current-round .user-selections img");
 
     if (selections.length < 5) {
         // const itm = choice.textContent;
-        const itm = event.target.textContent;
+        const itm = event.target.src;
 
-        const newSelection = document.createElement("h3");
-        newSelection.textContent = itm
-        newSelections.append(newSelection)
+        const newSelection = document.createElement("img");
+        newSelection.src = itm
+        newSelection.className = "game-icons"
+        newSelections.appendChild(newSelection)
         }
+
     else {
         alert("reached maximum selections")
    }
 
    if (selections.length === 4) {
-        const button = document.createElement("button");
-        
-        // add attributes to new button
-        button.textContent = "Final Answer!"
-        button.style.cursor = "pointer";
-        button.style.position = "relative"
-        button.style.left = "20%"
-        
-        currentRound.append(button)
-        button.addEventListener("click", checkPredictions)
+        const submitButton = document.querySelector("#submit-button");
+        submitButton.addEventListener("click", checkPredictions)
+        submitButton.style.display = "flex"
     }
 }
 
 function initiateNewRound() {
-    const newRound = document.createElement("div")
-    newRound.style.backgroundColor = "white"
-    newRound.className = "rounds"
-    newRound.id = "current-round"
-    
-    game.append(newRound)
+    const currentRound = document.createElement("div")
+    currentRound.className = "rounds"
+    currentRound.id = "current-round"
+    // gamePlay.insertBefore(currentRound, gamePlay.firstChild);
+    const referenceElement = document.getElementById("robot-selections")
+    referenceElement.insertAdjacentElement('afterend', currentRound)
+    // game.append(currentRound)
 
-    const currentRound = document.querySelector("#current-round");
+    // const currentRound = document.querySelector("#current-round");
     const newSelections = document.createElement("div");
-    
-    // fill in attributes
     newSelections.className = "user-selections"
-    newSelections.style.position = "relative"
-    newSelections.style.left = "-20%"
-
     currentRound.append(newSelections)
 
-    const choices = document.querySelectorAll("#user-choices h3");
+    const newLabel = document.createElement("h2");
+    newLabel.textContent = "New Prediction:"
+    newSelections.append(newLabel)
+
+    const choices = document.querySelectorAll("#user-choices img");
 
     choices.forEach(choice => {
         choice.addEventListener("click", addOptionClickEvent);
 })
 }
 
-const newPredButton = document.querySelector("#new-prediction")
-newPredButton.addEventListener("click", initiateNewRound)
-
 function checkPredictions() {
     const currentRound = document.querySelector("#current-round");
     const predicted = []
 
-    const selections = document.querySelectorAll("#current-round .user-selections h3");
+    const selections = document.querySelectorAll("#current-round .user-selections img");
     selections.forEach(selection => {
-        const itm = selection.textContent
-        predicted.push(itm)
+        const itm = selection.src
+        const filePred = itm.substring(itm.lastIndexOf('/') + 1)
+        predicted.push(filePred)
     })
 
     const actual = []
 
-    const actuals = document.querySelectorAll("#robot-selections h3");
+    const actuals = document.querySelectorAll("#robot-selections img");
     actuals.forEach(selection => {
-        const act = selection.textContent
-        actual.push(act)
+        const act = selection.src
+        const fileAct = act.substring(act.lastIndexOf('/') + 1)
+        actual.push(fileAct)
     })
 
     scoresShuffled = playRound(actual, predicted)
 
-    score_code = {1: "red",
-        2: "black"}
-
     const newResults = document.createElement("div");
     newResults.className = "user-results"
     currentRound.append(newResults)
+
+    const newLabel = document.createElement("h2");
+    newLabel.textContent = "Results:"
+    newResults.append(newLabel)
     
     scoresShuffled.forEach(score => {
-        color_code = score_code[score]
+        const resultType = score_code[score]
+        const fileName = resultType.toLowerCase().replace(/ /g, "_")
 
-        const newResult = document.createElement("h3");
-        newResult.textContent = "o"
-        newResult.style.color = color_code
+        const newResult = document.createElement("img");
+        newResult.src = `./img/game/${theme}/${fileName}.png`
+        newResult.alt = fileName
+        newResult.className = "game-icons"
+
         newResults.append(newResult)
     })
 
     // reset round
-    const button = document.querySelector("#current-round button");
-    button.style.display = "none"
+    const submitButton = document.querySelector("#submit-button");
+    submitButton.removeEventListener("click", checkPredictions)
+    submitButton.style.display = "none"
 
     currentRound.id = ''
 
-    const choices = document.querySelectorAll("#user-choices h3");
+    const choices = document.querySelectorAll("#user-choices img");
 
     choices.forEach(choice => {
         choice.removeEventListener("click", addOptionClickEvent); // Remove previous listeners to prevent duplicates
