@@ -80,9 +80,13 @@
         <div id="play" class="tab-content">
             <!-- <div id="dodger" style="left: 180px;"></div> -->
             <h3>PLAY MASTERMIND</h3>
-            <button id="select-theme">Select Theme</button>
+            <div class="dropdown">
+                <button onclick="myFunction()" id="theme">Select Theme</button>
+                <div id="myDropdown">
+                </div>
+              </div>
+            <button onclick="initiateNewGame()" id="new-game">New Game</button>
             <button id="show-answer">Show Answer</button>
-            <h2 id="theme">animals</h2>
             <div id="icon-key">
                 <div id="user-choices">
                     <h2>Options:</h2>

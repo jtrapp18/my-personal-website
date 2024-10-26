@@ -220,12 +220,27 @@ function playRound(actual, predicted) {
 }
 
 const game = document.querySelector("#play")
-const theme = document.querySelector("#theme").textContent
 const score_code = {1: "Partial Match", 2: "Exact Match"}
 
 // import gameThemes from './game_themes.json';
 
+function loadGamePage() {
+    const dropdown = document.getElementById("myDropdown")
+    const themeList = ["animals", "ice-cream"]
+    themeList.forEach(theme => {
+        const newTheme = document.createElement("a")
+        newTheme.textContent = theme
+        newTheme.href = "#"
+        dropdown.append(newTheme)
+
+        newTheme.addEventListener("click", function() {
+            document.getElementById("theme").textContent = theme
+        })
+    })
+}
+
 function initiateNewGame() {
+    const theme = document.querySelector("#theme").textContent
     optionsList = ["option1", "option2", "option3", "option4", "option5"]
     const choices = document.querySelector("#user-choices"); 
 
@@ -350,6 +365,7 @@ function initiateNewRound() {
 }
 
 function checkPredictions() {
+    const theme = document.querySelector("#theme").textContent
     const currentRound = document.querySelector("#current-round");
     const predicted = []
 
@@ -405,9 +421,32 @@ function checkPredictions() {
     });
 }
 
+/* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+    document.getElementById("myDropdown").classList.toggle("show");
+    // alert('something happened')
+  }
+  
+  // Close the dropdown menu if the user clicks outside of it
+  window.onclick = function(event) {
+    if (!event.target.matches('#theme')) {
+      const dropdowns = document.getElementById("myDropdown");
+      dropdowns.classList.remove('show');
+
+    //   var i;
+    //   for (i = 0; i < dropdowns.length; i++) {
+    //     var openDropdown = dropdowns[i];
+    //     if (openDropdown.classList.contains('show')) {
+    //       openDropdown.classList.remove('show');
+    //     }
+    //   }
+    }
+  }
+
 initializeTabs();
 addingEventListener();
 addDodgerEvents();
 logoZoom();
-initiateNewGame();
+loadGamePage();
 // addUserPrediction();
