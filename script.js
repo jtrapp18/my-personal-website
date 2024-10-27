@@ -235,6 +235,7 @@ function loadGamePage() {
 
         newTheme.addEventListener("click", function() {
             document.getElementById("theme").textContent = theme
+            document.getElementById("new-game").className = "show-button"
         })
     })
 }
@@ -242,7 +243,11 @@ function loadGamePage() {
 function initiateNewGame() {
     const theme = document.querySelector("#theme").textContent
     optionsList = ["option1", "option2", "option3", "option4", "option5"]
-    const choices = document.querySelector("#user-choices"); 
+    const choices = document.querySelector("#user-choices");
+
+    const newLabel = document.createElement("h2")
+    newLabel.textContent = "Options:"
+    choices.append(newLabel)
 
     optionsList.forEach(option => {
         const newOption = document.createElement("img")
@@ -297,10 +302,11 @@ function initiateNewGame() {
     }
 
     // add events to buttons
-    const newPredButton = document.getElementById("new-prediction");
-    newPredButton.addEventListener("click", initiateNewRound)
+    // const newPredButton = document.getElementById("new-prediction");
+    // newPredButton.addEventListener("click", initiateNewRound)
 
     const showAnsButton = document.getElementById("show-answer");
+    showAnsButton.className = "show-button"
     showAnsButton.addEventListener("click", function(event) {
         curr = event.target.textContent
         if (curr === "Show Answer"){
@@ -310,6 +316,8 @@ function initiateNewGame() {
             showAnsButton.textContent = "Show Answer"
             robotSelections.style.display = "none"}
         })
+
+    document.getElementById("new-prediction").className = "show-button"
 }
 
 function addOptionClickEvent(event) {
@@ -340,28 +348,33 @@ function addOptionClickEvent(event) {
 }
 
 function initiateNewRound() {
-    const currentRound = document.createElement("div")
-    currentRound.className = "rounds"
-    currentRound.id = "current-round"
-    // gamePlay.insertBefore(currentRound, gamePlay.firstChild);
-    const referenceElement = document.getElementById("robot-selections")
-    referenceElement.insertAdjacentElement('afterend', currentRound)
-    // game.append(currentRound)
+    if (document.querySelectorAll("#current-round").length >0) {
+        alert("Need to finish current round before starting a new round")
+    }
 
-    // const currentRound = document.querySelector("#current-round");
-    const newSelections = document.createElement("div");
-    newSelections.className = "user-selections"
-    currentRound.append(newSelections)
+    else {
+        const currentRound = document.createElement("div")
+        currentRound.className = "rounds"
+        currentRound.id = "current-round"
+        // gamePlay.insertBefore(currentRound, gamePlay.firstChild);
+        const referenceElement = document.getElementById("robot-selections")
+        referenceElement.insertAdjacentElement('afterend', currentRound)
+        // game.append(currentRound)
 
-    const newLabel = document.createElement("h2");
-    newLabel.textContent = "New Prediction:"
-    newSelections.append(newLabel)
+        // const currentRound = document.querySelector("#current-round");
+        const newSelections = document.createElement("div");
+        newSelections.className = "user-selections"
+        currentRound.append(newSelections)
 
-    const choices = document.querySelectorAll("#user-choices img");
+        const newLabel = document.createElement("h2");
+        newLabel.textContent = "New Prediction:"
+        newSelections.append(newLabel)
 
-    choices.forEach(choice => {
-        choice.addEventListener("click", addOptionClickEvent);
-})
+        const choices = document.querySelectorAll("#user-choices img");
+
+        choices.forEach(choice => {
+            choice.addEventListener("click", addOptionClickEvent);
+    })}
 }
 
 function checkPredictions() {
@@ -407,23 +420,42 @@ function checkPredictions() {
         newResults.append(newResult)
     })
 
+    resetRound()
+
+    // // reset round
+    // const submitButton = document.querySelector("#submit-button");
+    // submitButton.removeEventListener("click", checkPredictions)
+    // submitButton.className = "hide-button"
+
+    // document.querySelector("#current-round .user-selections h2").textContent = "Round 1"
+    // currentRound.id = ''
+
+    // const choices = document.querySelectorAll("#user-choices img");
+
+    // choices.forEach(choice => {
+    //     choice.removeEventListener("click", addOptionClickEvent); // Remove previous listeners to prevent duplicates
+    // });
+}
+
+function resetRound() {
     // reset round
     const submitButton = document.querySelector("#submit-button");
     submitButton.removeEventListener("click", checkPredictions)
-    submitButton.style.display = "none"
+    submitButton.className = "hide-button"
 
+    document.querySelector("#current-round .user-selections h2").textContent = "Round 1"
     currentRound.id = ''
 
     const choices = document.querySelectorAll("#user-choices img");
 
     choices.forEach(choice => {
         choice.removeEventListener("click", addOptionClickEvent); // Remove previous listeners to prevent duplicates
-    });
+    });  
 }
 
 /* When the user clicks on the button,
 toggle between hiding and showing the dropdown content */
-function myFunction() {
+function showHideDropdown() {
     document.getElementById("myDropdown").classList.toggle("show");
     // alert('something happened')
   }

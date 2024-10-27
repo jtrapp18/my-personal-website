@@ -26,10 +26,10 @@
         <div id="about-me" class="tab-content">
             <div class="row-item">
                 <div class="image-container">
-                    <img src="./img/view/winter.jpg" alt="Image 1">
+                    <img src="./img/about-me/FAC.jpg" alt="Fellowship Admissions Course">
                     <div class="overlay">
                         <p>
-                            Hover text: Additional information about the image.
+                            My boyfriend and me at the Fellowship Admissions Course, where I obtained my Fellowship to the Society of Actuaries.
                         </p>
                     </div>
                 </div>
@@ -42,20 +42,20 @@
                     During my time as an actuary, I have always found myself seeking out opportunities to code. I started out in VBA and have since shifted to coding primarily in Python. The majority of my programming experience has been in the back-end.
                 </p>
                 <div class="image-container">
-                    <img src="./img/view/spring.jpg" alt="Image 1">
+                    <img src="./img/about-me/hiking.jpg" alt="Going for a hike">
                     <div class="overlay">
                         <p>
-                            Hover text: Additional information about the image.
+                            Me going for a hike at Acadia National Park in Maine.
                         </p>
                     </div>
                 </div>
             </div>
             <div class="row-item">
                 <div class="image-container">
-                    <img src="./img/view/summer.jpg" alt="Image 1">
+                    <img src="./img/about-me/brooke.jpg" alt="My cat Brooke">
                     <div class="overlay">
                         <p>
-                            Hover text: Additional information about the image.
+                            My cat, Brooke, enjoying the fall.
                         </p>
                     </div>
                 </div>
@@ -68,10 +68,10 @@
                     I am excited to be enrolled in FlatIron School at a Software Engineering bootcamp. I have already learned so much about Javascript, CSS, and HTML!
                 </p>
                 <div class="image-container">
-                    <img src="./img/view/fall.jpg" alt="Image 1">
+                    <img src="./img/about-me/buster.jpg" alt="My cat Buster">
                     <div class="overlay">
                         <p>
-                            Hover text: Additional information about the image.
+                            My cat, Buster, enjoying the fall.
                         </p>
                     </div>
                 </div>
@@ -79,24 +79,23 @@
         </div>
         <div id="play" class="tab-content">
             <!-- <div id="dodger" style="left: 180px;"></div> -->
-            <h3>PLAY MASTERMIND</h3>
+            <h3>PLAY GAME</h3>
             <div class="dropdown">
-                <button onclick="myFunction()" id="theme">Select Theme</button>
+                <button onclick="showHideDropdown()" id="theme">Select Theme</button>
                 <div id="myDropdown">
                 </div>
               </div>
-            <button onclick="initiateNewGame()" id="new-game">New Game</button>
-            <button id="show-answer">Show Answer</button>
+            <button onclick="initiateNewGame()" id="new-game" class="hide-button">New Game</button>
+            <button id="show-answer" class="hide-button">Show Answer</button>
             <div id="icon-key">
                 <div id="user-choices">
-                    <h2>Options:</h2>
                 </div>
                 <div id="result-key">
                 </div>
             </div>
             <div id="gameplay-buttons">
-                <button id="new-prediction">+ New Prediction</button>
-                <button id="submit-button">Submit Answer</button>
+                <button onclick="initiateNewRound()" id="new-prediction" class="hide-button">+ New Prediction</button>
+                <button id="submit-button" class="hide-button">Submit Answer</button>
             </div>
             <div id="robot-selections"></div>
         </div>
