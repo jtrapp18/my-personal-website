@@ -228,9 +228,13 @@ function loadGamePage() {
         newTheme.href = "#"
         dropdown.append(newTheme)
 
+        newGameClasses = document.getElementById("new-game").classList
+
         newTheme.addEventListener("click", function() {
             document.getElementById("theme").textContent = theme
-            document.getElementById("new-game").className = "show-button"
+
+            newGameClasses.remove("hide-button")
+            newGameClasses.add("show-button")
         })
     })
 }
@@ -327,6 +331,7 @@ function initiateNewGame() {
     document.getElementById("new-prediction").className = "show-button"
     document.getElementById("game-title").className = ""
     document.getElementById("theme").className = ""
+    document.getElementById("new-game").className = "show-button"
 }
 
 function addOptionClickEvent(event) {

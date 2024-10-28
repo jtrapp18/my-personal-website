@@ -303,12 +303,15 @@ button {
   height: 25px;
   position: relative;
   top: 5px;
+  justify-content: center;
+  width: 150px;
 }
 
 /* Dropdown Button */
 #play #theme {
   margin-bottom: 5px;
-  /* width: 200px; */
+  background-color: rgb(31, 49, 31);
+  color: white;
 }
 
 /* Dropdown button on hover & focus */
@@ -372,6 +375,13 @@ button {
 }
 
 #play #theme.opening-page {
-  width:100%;
   width: 200px;
+  left: 0%;
+  background-color: white;
+  color: black;
+}
+
+#play #new-game.opening-page {
+  width: 200px;
+  left: calc(50% - 100px);
 }
