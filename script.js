@@ -199,24 +199,19 @@ function scorePartial(progress) {
 
 }
 
-function shuffle(score) {
-    const score_shuffled = score.filter((i) => i>0)
+function sortResults(score) {
+    const scoreFiltered = score.filter((i) => i>0)
+    const scoreSorted = scoreFiltered.sort()
 
-    for (let i = score_shuffled.length - 1; i > 0; i--) {
-        // Generate a random index from 0 to i
-        const j = Math.floor(Math.random() * (i + 1));
-        // Swap elements at index i and j
-        [score_shuffled[i], score_shuffled[j]] = [score_shuffled[j], score_shuffled[i]];
-    }
-    return score_shuffled;
+    return scoreSorted;
 }
 
 function playRound(actual, predicted) {
     progress = scoreExact(actual, predicted)
     score = scorePartial(progress)
-    scoreShuffled = shuffle(score)
+    scoreSorted = sortResults(score)
 
-    return scoreShuffled
+    return scoreSorted
 }
 
 const game = document.querySelector("#play")
@@ -240,7 +235,7 @@ function loadGamePage() {
     })
 }
 
-function initiateNewGame() {
+function addUserKeys() {
     const theme = document.querySelector("#theme").textContent
     optionsList = ["option1", "option2", "option3", "option4", "option5"]
     const choices = document.querySelector("#user-choices");
@@ -285,9 +280,12 @@ function initiateNewGame() {
 
         resultKey.append(newResult)
     })
+}
 
+function addRobotSelections() {
+    const theme = document.querySelector("#theme").textContent
     const robotSelections = document.getElementById("robot-selections")
-    robotSelections.style.display = "none"
+    // robotSelections.style.display = "none"
     game.append(robotSelections)
 
     let randomItem
@@ -300,24 +298,35 @@ function initiateNewGame() {
         robotSelection.className = "game-icons"
         robotSelections.append(robotSelection)
     }
+}
 
-    // add events to buttons
-    // const newPredButton = document.getElementById("new-prediction");
-    // newPredButton.addEventListener("click", initiateNewRound)
-
+function showHideAnswer(event) {
     const showAnsButton = document.getElementById("show-answer");
     showAnsButton.className = "show-button"
-    showAnsButton.addEventListener("click", function(event) {
-        curr = event.target.textContent
-        if (curr === "Show Answer"){
-            showAnsButton.textContent = "Hide Answer"
-            robotSelections.style.display = "flex"}
-        else {
-            showAnsButton.textContent = "Show Answer"
-            robotSelections.style.display = "none"}
-        })
 
+    curr = event.target.textContent
+    if (curr === "Show Answer"){
+        showAnsButton.textContent = "Hide Answer"
+        // robotSelections.style.display = "flex"}
+        document.getElementById("robot-selections").className="show-answer"
+    }
+    else {
+        showAnsButton.textContent = "Show Answer"
+        // robotSelections.style.display = "none"}
+        document.getElementById("robot-selections").className=""
+    }
+}
+
+function initiateNewGame() {
+
+    resetGame()
+    addUserKeys()
+    addRobotSelections()
+
+    document.getElementById("show-answer").className = "show-button"
     document.getElementById("new-prediction").className = "show-button"
+    document.getElementById("game-title").className = ""
+    document.getElementById("theme").className = ""
 }
 
 function addOptionClickEvent(event) {
@@ -341,9 +350,9 @@ function addOptionClickEvent(event) {
    }
 
    if (selections.length === 4) {
-        const submitButton = document.querySelector("#submit-button");
-        submitButton.addEventListener("click", checkPredictions)
-        submitButton.style.display = "flex"
+        document.querySelector("#submit-answer").className="show-button";
+        // submitButton.addEventListener("click", checkPredictions)
+        // submitButton.className="show-button"
     }
 }
 
@@ -422,35 +431,66 @@ function checkPredictions() {
 
     resetRound()
 
-    // // reset round
-    // const submitButton = document.querySelector("#submit-button");
-    // submitButton.removeEventListener("click", checkPredictions)
-    // submitButton.className = "hide-button"
-
-    // document.querySelector("#current-round .user-selections h2").textContent = "Round 1"
-    // currentRound.id = ''
-
-    // const choices = document.querySelectorAll("#user-choices img");
-
-    // choices.forEach(choice => {
-    //     choice.removeEventListener("click", addOptionClickEvent); // Remove previous listeners to prevent duplicates
-    // });
 }
 
 function resetRound() {
     // reset round
-    const submitButton = document.querySelector("#submit-button");
+    const submitButton = document.querySelector("#submit-answer");
     submitButton.removeEventListener("click", checkPredictions)
     submitButton.className = "hide-button"
 
-    document.querySelector("#current-round .user-selections h2").textContent = "Round 1"
-    currentRound.id = ''
+    currRound = document.querySelector(".rounds")
+    prevRound = currRound.nextElementSibling
+
+    if (prevRound == null) {
+        roundNum = 1
+    }
+    else {
+        prevRoundTxt = prevRound.querySelector(".user-selections h2").textContent
+        prevRoundNum = parseInt(prevRoundTxt.slice(-1))
+        roundNum = prevRoundNum + 1
+    } 
+
+    currRound.querySelector(".user-selections h2").textContent = `Round ${roundNum}`
+    // document.getElementById("current-round").id = ''
+    currRound.id=""
 
     const choices = document.querySelectorAll("#user-choices img");
 
     choices.forEach(choice => {
         choice.removeEventListener("click", addOptionClickEvent); // Remove previous listeners to prevent duplicates
     });  
+}
+
+function resetGame() {
+    // const robotSelections = document.getElementById("robot-selections")
+    const rounds = document.querySelectorAll(".rounds")
+    // const choices = document.querySelectorAll("#user-choices img");
+
+    rounds.forEach(round => {
+        round.remove()
+    })
+
+    // remove child elements of specified parents
+    const parentIds = ["robot-selections", "user-choices", "result-key"]
+
+    parentIds.forEach(parentId => {
+        const parentObj = document.getElementById(parentId)
+        while (parentObj.firstChild) {
+            parentObj.removeChild(parentObj.firstChild)
+        }            
+    })
+
+    // choices.forEach(choice => {
+    //     choice.removeEventListener("click", addOptionClickEvent); // Remove previous listeners to prevent duplicates
+    // });  
+
+    // hide buttons
+    const buttonIds = ["show-answer", "new-prediction", "submit-answer"]
+
+    buttonIds.forEach(buttonId => {
+        document.getElementById(buttonId).className="hide-button"
+    })
 }
 
 /* When the user clicks on the button,
@@ -465,15 +505,9 @@ function showHideDropdown() {
     if (!event.target.matches('#theme')) {
       const dropdowns = document.getElementById("myDropdown");
       dropdowns.classList.remove('show');
-
-    //   var i;
-    //   for (i = 0; i < dropdowns.length; i++) {
-    //     var openDropdown = dropdowns[i];
-    //     if (openDropdown.classList.contains('show')) {
-    //       openDropdown.classList.remove('show');
-    //     }
-    //   }
     }
+
+
   }
 
 initializeTabs();

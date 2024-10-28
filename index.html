@@ -79,14 +79,15 @@
         </div>
         <div id="play" class="tab-content">
             <!-- <div id="dodger" style="left: 180px;"></div> -->
-            <h3>PLAY GAME</h3>
+            <h3 id="game-title" class="opening-page">PLAY GAME</h3>
             <div class="dropdown">
-                <button onclick="showHideDropdown()" id="theme">Select Theme</button>
+                <!-- <h2>Theme:</h2> -->
+                <button onclick="showHideDropdown()" id="theme" class="opening-page">Select Theme</button>
                 <div id="myDropdown">
                 </div>
               </div>
             <button onclick="initiateNewGame()" id="new-game" class="hide-button">New Game</button>
-            <button id="show-answer" class="hide-button">Show Answer</button>
+            <button onclick="showHideAnswer(event)" id="show-answer" class="hide-button">Show Answer</button>
             <div id="icon-key">
                 <div id="user-choices">
                 </div>
@@ -95,7 +96,7 @@
             </div>
             <div id="gameplay-buttons">
                 <button onclick="initiateNewRound()" id="new-prediction" class="hide-button">+ New Prediction</button>
-                <button id="submit-button" class="hide-button">Submit Answer</button>
+                <button onclick="checkPredictions()" id="submit-answer" class="hide-button">Submit Answer</button>
             </div>
             <div id="robot-selections"></div>
         </div>
