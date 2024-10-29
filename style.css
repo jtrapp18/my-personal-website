@@ -159,7 +159,7 @@ header.minimized .tab-names {
   bottom: 0px;
 }
 
-#fun {
+/* #fun {
   background-color: #111;
   height: 400px;
   margin: 0 auto;
@@ -167,7 +167,7 @@ header.minimized .tab-names {
   position: relative;
   text-align: center;
   width: 400px;
-}
+} */
 
 .row-item {
   position: relative;
@@ -259,8 +259,8 @@ footer img {
 }
 
 .rounds {
-  background-color: white;
-  border-bottom: 2px solid black;
+  background-color: rgb(248, 230, 217);
+  border-bottom: 1px solid black;
   /* display: flex;
   justify-content: flex-start;  */
   /* float: left;
@@ -288,9 +288,19 @@ footer img {
 
 #result-key {
   width: 50%;
+  background-color: rgb(187, 185, 185);
 }
 
 #user-choices {
+  width: 50%;
+}
+
+#answer-key {
+  background-color: white;
+  border-bottom: 2px solid black;
+}
+
+#answer-key div {
   width: 50%;
 }
 
@@ -329,18 +339,20 @@ button {
 #play #myDropdown {
   display: none;
   position: absolute;
-  background-color: #f1f1f1;
+  /* background-color: #f1f1f1; */
   min-width: 100%;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  /* box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); */
   z-index: 1;
 }
 
 /* Links inside the dropdown */
 #play #myDropdown a {
   /* color: black; */
-  padding: 12px 12px;
+  /* padding: 12px 12px; */
   text-decoration: none;
   display: block;
+  background-color: white;
+  margin: 0px;
 }
 
 /* Change color of dropdown links on hover */
@@ -365,6 +377,7 @@ button {
 
 #play #robot-selections {
   display: none;
+  width: 50%;
 }
 #play #robot-selections.show-answer {
   display: flex;
@@ -379,9 +392,11 @@ button {
   left: 0%;
   background-color: white;
   color: black;
+  font-size: 20px;
 }
 
 #play #new-game.opening-page {
   width: 200px;
   left: calc(50% - 100px);
+  font-size: 20px;
 }

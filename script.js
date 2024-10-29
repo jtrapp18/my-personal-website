@@ -290,10 +290,14 @@ function addRobotSelections() {
     const theme = document.querySelector("#theme").textContent
     const robotSelections = document.getElementById("robot-selections")
     // robotSelections.style.display = "none"
-    game.append(robotSelections)
+    // game.append(robotSelections)
+
+    const newLabel = document.createElement("h2")
+    newLabel.textContent = "Answer:"
+    robotSelections.append(newLabel)
 
     let randomItem
-    for (let a = 0; a < 5; a++) {
+    for (let a = 0; a < 4; a++) {
         randomItem = optionsList[Math.floor(Math.random() * optionsList.length)];
 
         const robotSelection = document.createElement("img")
@@ -340,7 +344,11 @@ function addOptionClickEvent(event) {
     const newSelections = document.querySelector("#current-round .user-selections")
     const selections = document.querySelectorAll("#current-round .user-selections img");
 
-    if (selections.length < 5) {
+    if (selections.length == 0) {
+        document.querySelector("#clear-answer").className="show-button";
+    }
+
+    if (selections.length < 4) {
         // const itm = choice.textContent;
         const itm = event.target.src;
 
@@ -354,10 +362,8 @@ function addOptionClickEvent(event) {
         alert("reached maximum selections")
    }
 
-   if (selections.length === 4) {
+   if (selections.length === 3) {
         document.querySelector("#submit-answer").className="show-button";
-        // submitButton.addEventListener("click", checkPredictions)
-        // submitButton.className="show-button"
     }
 }
 
@@ -371,7 +377,7 @@ function initiateNewRound() {
         currentRound.className = "rounds"
         currentRound.id = "current-round"
         // gamePlay.insertBefore(currentRound, gamePlay.firstChild);
-        const referenceElement = document.getElementById("robot-selections")
+        const referenceElement = document.getElementById("gameplay-buttons")
         referenceElement.insertAdjacentElement('afterend', currentRound)
         // game.append(currentRound)
 
@@ -412,7 +418,7 @@ function checkPredictions() {
         actual.push(fileAct)
     })
 
-    scoresShuffled = playRound(actual, predicted)
+    scoreSorted = playRound(actual, predicted)
 
     const newResults = document.createElement("div");
     newResults.className = "user-results"
@@ -422,7 +428,7 @@ function checkPredictions() {
     newLabel.textContent = "Results:"
     newResults.append(newLabel)
     
-    scoresShuffled.forEach(score => {
+    scoreSorted.forEach(score => {
         const resultType = score_code[score]
         const fileName = resultType.toLowerCase().replace(/ /g, "_")
 
@@ -434,12 +440,21 @@ function checkPredictions() {
         newResults.append(newResult)
     })
 
-    resetRound()
+    roundNum = resetRound()
 
+    if (scoreSorted.filter(score => score === 2).length === 4) {
+        winGame();
+    }
+    else if (roundNum == 3) {
+        loseGame();
+    }
 }
 
 function resetRound() {
-    // reset round
+    const clearButton = document.querySelector("#clear-answer");
+    clearButton.removeEventListener("click", clearPredictions)
+    clearButton.className = "hide-button"
+
     const submitButton = document.querySelector("#submit-answer");
     submitButton.removeEventListener("click", checkPredictions)
     submitButton.className = "hide-button"
@@ -457,20 +472,27 @@ function resetRound() {
     } 
 
     currRound.querySelector(".user-selections h2").textContent = `Round ${roundNum}`
-    // document.getElementById("current-round").id = ''
     currRound.id=""
 
     const choices = document.querySelectorAll("#user-choices img");
 
     choices.forEach(choice => {
         choice.removeEventListener("click", addOptionClickEvent); // Remove previous listeners to prevent duplicates
-    });  
+    });   
+
+    return roundNum
+}
+
+function clearPredictions() {
+    const selections = document.querySelectorAll("#current-round .user-selections img");
+
+    selections.forEach(selection => {
+        selection.remove()
+    })
 }
 
 function resetGame() {
-    // const robotSelections = document.getElementById("robot-selections")
     const rounds = document.querySelectorAll(".rounds")
-    // const choices = document.querySelectorAll("#user-choices img");
 
     rounds.forEach(round => {
         round.remove()
@@ -486,12 +508,7 @@ function resetGame() {
         }            
     })
 
-    // choices.forEach(choice => {
-    //     choice.removeEventListener("click", addOptionClickEvent); // Remove previous listeners to prevent duplicates
-    // });  
-
-    // hide buttons
-    const buttonIds = ["show-answer", "new-prediction", "submit-answer"]
+    const buttonIds = ["show-answer", "new-prediction", "clear-answer", "submit-answer"]
 
     buttonIds.forEach(buttonId => {
         document.getElementById(buttonId).className="hide-button"
@@ -511,9 +528,23 @@ function showHideDropdown() {
       const dropdowns = document.getElementById("myDropdown");
       dropdowns.classList.remove('show');
     }
-
-
   }
+
+function winGame() {
+    document.querySelector("#new-prediction").className="hide-button"
+    document.getElementById("show-answer").textContent = "Hide Answer"
+    document.getElementById("robot-selections").className="show-answer"
+
+    alert("YOU WIN!")
+}
+
+function loseGame() {
+    document.querySelector("#new-prediction").className="hide-button"
+    document.getElementById("show-answer").textContent = "Hide Answer"
+    document.getElementById("robot-selections").className="show-answer"
+
+    alert("GAME OVER")
+}
 
 initializeTabs();
 addingEventListener();

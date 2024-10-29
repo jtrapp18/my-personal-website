@@ -3,6 +3,7 @@
     <head>
         <link rel="stylesheet" href="style.css" />
         <title>My Personal Website</title>
+        <script defer src="script.js"></script>
     </head>
     <body>
         <header>
@@ -94,11 +95,15 @@
                 <div id="result-key">
                 </div>
             </div>
+            <div id="answer-key">
+                <div id="robot-selections"></div>
+                <div></div>
+            </div>
             <div id="gameplay-buttons">
                 <button onclick="initiateNewRound()" id="new-prediction" class="hide-button">+ New Prediction</button>
+                <button onclick="clearPredictions()" id="clear-answer" class="hide-button">Clear Answer</button>
                 <button onclick="checkPredictions()" id="submit-answer" class="hide-button">Submit Answer</button>
             </div>
-            <div id="robot-selections"></div>
         </div>
         <div id="projects" class="tab-content">
             <p>to be decided...</p>
@@ -114,6 +119,5 @@
                 <div><img src="./img/logos/LI-Black.png" alt="Linked-In Logo"></div>
             </a>
         </footer>
-        <script src="script.js"></script>
     </body>
 </html>
