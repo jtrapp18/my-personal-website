@@ -398,8 +398,11 @@ function initiateNewRound() {
         choices.forEach(choice => {
             choice.addEventListener("click", addOptionClickEvent);
     })}
-
-    // document.querySelector("#new-prediction").className="hide-button";
+    
+    const gameContainer = document.querySelector("#game");
+    requestAnimationFrame(() => {
+        gameContainer.scrollTop = gameContainer.scrollHeight;
+    });
 }
 
 function checkPredictions() {

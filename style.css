@@ -3,29 +3,19 @@
 }
 
 body {
-    /* background-image: url("./img/background/pine_paneling.jpeg");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat; */
     text-align: center;
     background-color: rgb(31, 49, 31);
-    /* font-family: 'Trebuchet MS'; */
     padding-top: 250px;
     padding-bottom: 0px;
     margin: 0px;
-    /* font-family:'Garamond'; */
-    /* font-family: 'Candara'; */
+    margin-bottom: 60px;
     font-family: 'Candara';
-    /* padding-bottom: 100px; */
     align-items: center;
-    /* font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif */
-    /* font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif */
   }
 
 header {
   position: fixed;
   background-color: white;
-  /* color: #000042; */
   color: rgb(31, 49, 31);
   width: 100%;
   top: 0;
@@ -38,22 +28,8 @@ header {
   /* transition: height 0.3s ease; Smooth transition */
 }
 
-/* header h1 {
-  background-color: rgb(31, 49, 31);
-  color: white;
-} */
-
-#window {
-  position: absolute;
-  top: 250px;
-  left: 0;
-  width: 100%; /* Set desired width */
-  /* height: 100px; Set desired height */
-  /* opacity: 0.5; Optional: set transparency */
-}
-
 header.minimized {
-  height: 50px; /* Minimized height */
+  height: 50px;
   padding: 0;
 }
 
@@ -62,7 +38,7 @@ header .minimized-content {
 }
 
 header.minimized .minimized-content {
-  display: none; /* Hide other header content */
+  display: none;
 }
 
 h1 {
@@ -72,8 +48,6 @@ h1 {
 
 h2 {
   font-size: 20px;
-  /* color: rgb(188, 71, 71); */
-  /* font-family: 'Avant Garde'; */
 }
 
 h3 {
@@ -84,7 +58,6 @@ h3 {
 h4 {
   font-size: 20px;
   color: gray;
-  /* padding-left: 20px; */
 }
 
 #intro {
@@ -100,35 +73,24 @@ p {
 
 #home{
   display: flex;
-  /* top: 250px; */
   left: 0px;
   padding: 0;
   margin: 0;
-  overflow: hidden;
+  /* overflow: hidden; */
   height: calc(100vh - 310px);
   width: 100%;
   align-items: center;
   box-sizing: border-box;
-  /* object-fit: contain; */
 }
 
 #home img {
-  /* top: 250px; */
   padding: 0;
   margin: 0;
   /* height: calc(100vh - 350px); */
   height: 100%;
   width: 100%;
-  /* width: auto; */
   object-fit: cover;
-  /* object-fit: contain; */
 }
-
-/* div.tab-names {
-  float: left;
-  width: 25%;
-  text-align: center;
-} */
 
 .tab-names {
   display: flex;
@@ -146,28 +108,6 @@ p {
 header.minimized .tab-names {
   display: flex; 
 }
-
-#dodger {
-  background-color: white;
-  /* background-image: url("./img/background/wooden panels.jpg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat; */
-  height: 20px;
-  position: absolute;
-  width: 40px;
-  bottom: 0px;
-}
-
-/* #fun {
-  background-color: #111;
-  height: 400px;
-  margin: 0 auto;
-  overflow: hidden;
-  position: relative;
-  text-align: center;
-  width: 400px;
-} */
 
 .row-item {
   position: relative;
@@ -213,6 +153,7 @@ header.minimized .tab-names {
 }
 
 footer {
+  display: flex;
   left: 0;
   position: fixed;
   background-color: white;
@@ -239,21 +180,12 @@ footer img {
   height: 100%;
 }
 
-/* #play div h3 {
-  padding-left: 5%;
-  padding-right: 5%;
-  cursor: pointer;
-}
-
-#robot-selections h3 {
-  padding-left: 5%;
-  padding-right: 5%;
-} */
-
 .game-icons {
+  position: relative;
   /* width: 30px;
   height: 30px; */
   max-width: 10%;
+  /* height: auto; */
   margin-left: 10px;
   margin-top: 10px;
   cursor: pointer;
@@ -262,30 +194,19 @@ footer img {
 .rounds {
   background-color: rgb(248, 230, 217);
   border-bottom: 1px solid black;
-  /* display: flex;
-  justify-content: flex-start;  */
-  /* float: left;
-  margin-left: 10px; */
-  /* width: 100%; */
-  /* height: 50px; */
 }
 
 .user-selections {
-  /* position: relative;
-  left: 0%; */
   width: 50%;
 }
 
 .user-results {
-  /* position: relative;
-  left: 0%; */
   width: 50%;
   background-color: rgb(241, 184, 144);
 }
 
 #icon-key {
   background-color: lightgray;
-  /* height: 200px; */
 }
 
 #result-key {
@@ -342,7 +263,6 @@ button {
 #play #myDropdown {
   display: none;
   position: absolute;
-  /* background-color: #f1f1f1; */
   min-width: 100%;
   /* box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); */
   z-index: 1;
@@ -350,8 +270,6 @@ button {
 
 /* Links inside the dropdown */
 #play #myDropdown a {
-  /* color: black; */
-  /* padding: 12px 12px; */
   text-decoration: none;
   display: block;
   background-color: white;
@@ -374,10 +292,6 @@ button {
   display: flex;
 }
 
-/* #play .hide-answer {
-  display: none;
-} */
-
 #play #robot-selections {
   display: none;
   width: 50%;
@@ -387,7 +301,8 @@ button {
 }
 
 #play h3.opening-page {
-  font-size: 70px;
+  /* font-size: 70px; */
+  font-size: calc(8vw);
 }
 
 #play #theme.opening-page {
