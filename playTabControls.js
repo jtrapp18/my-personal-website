@@ -3,7 +3,7 @@ const scoreCode = {1: "Partial Match", 2: "Exact Match"}
 
 function loadGamePage() {
     const dropdown = document.getElementById("myDropdown")
-    const themeList = ["animals", "ice-cream"]
+    const themeList = ["animals", "ice-cream", "flowers"]
     themeList.forEach(theme => {
         const newTheme = document.createElement("a")
         newTheme.textContent = theme
@@ -25,12 +25,12 @@ function loadGamePage() {
 
 function addUserKeys() {
     const theme = document.querySelector("#theme").textContent
-    optionsList = ["option1", "option2", "option3", "option4", "option5"]
+    optionsList = ["option1", "option2", "option3", "option4", "option5", "option6"]
     const choices = document.querySelector("#user-choices");
 
-    const newLabel = document.createElement("h2")
-    newLabel.textContent = "Options:"
-    choices.append(newLabel)
+    // const newLabel = document.createElement("h2")
+    // newLabel.textContent = "Options:"
+    // choices.append(newLabel)
 
     optionsList.forEach(option => {
         const newOption = document.createElement("img")
@@ -111,12 +111,15 @@ function initiateNewGame() {
     addRobotSelections()
     initiateNewRound()
 
+    inOpeningPg = document.querySelectorAll(".opening-page")
+    inOpeningPg.forEach(item => {
+        item.classList.remove("opening-page")
+    })
+
     document.getElementById("show-answer").textContent = "Show Answer"
     document.getElementById("robot-selections").className=""
 
     document.getElementById("game-title").className = ""
-    document.getElementById("theme").classList.remove("opening-page")
-    document.getElementById("myDropdown").className = ""
     document.getElementById("show-answer").className = "show-button"    
     document.getElementById("new-game").className = "show-button"
 }

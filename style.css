@@ -74,10 +74,10 @@ a {
 
 p {
   /* font-size: 20px; */
-  font-size: calc(2vw);
+  font-size: calc(1vw + 10px);
   color: white;
-  margin-left: 5px;
-  margin-right: 5px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 #home{
@@ -365,6 +365,16 @@ h3#game-title {
 
 }
 
+#play #new-game.opening-page {
+  position: relative;
+  top: 0px;
+  width: 500px;
+  height: 50px;
+  left: calc(50% - 250px);
+  /* font-size: 20px; */
+  font-weight: bold;
+
+}
 #play #new-game {
   position: absolute;
   top: 260px;
@@ -372,4 +382,8 @@ h3#game-title {
 #play #show-answer {
   position: absolute;
   top: 285px;
+}
+
+#play #directions.opening-page {
+  display: none;
 }
