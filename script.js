@@ -156,63 +156,63 @@ document.addEventListener('scroll', function() {
 
   // Game play ****************************************************************************************************
 
-function scoreExact(actual, predicted) {
-    const actual_tracked = [...actual]
-    const pred_tracked = [...predicted]
-    const score = []
-    const progress = {'score': score, 'actual': actual_tracked, 'predicted': pred_tracked}
+// function scoreExact(actual, predicted) {
+//     const actual_tracked = [...actual]
+//     const pred_tracked = [...predicted]
+//     const score = []
+//     const progress = {'score': score, 'actual': actual_tracked, 'predicted': pred_tracked}
     
-    for (let p = 0; p <pred_tracked.length; p++) {
-        if (pred_tracked[p] === actual_tracked[p]) {
-            score[p] = 2
-            actual_tracked.splice(p, 1, 0) //remove match from consideration for next round
-            pred_tracked.splice(p, 1, 0) //remove match from consideration for next round
-        }
-        else {score[p] = 0}
-    }
-    return progress
+//     for (let p = 0; p <pred_tracked.length; p++) {
+//         if (pred_tracked[p] === actual_tracked[p]) {
+//             score[p] = 2
+//             actual_tracked.splice(p, 1, 0) //remove match from consideration for next round
+//             pred_tracked.splice(p, 1, 0) //remove match from consideration for next round
+//         }
+//         else {score[p] = 0}
+//     }
+//     return progress
 
-}
+// }
 
-function scorePartial(progress) {
-    const score = progress['score']
-    const actual_tracked = progress['actual']
-    const pred_tracked = progress['predicted']
+// function scorePartial(progress) {
+//     const score = progress['score']
+//     const actual_tracked = progress['actual']
+//     const pred_tracked = progress['predicted']
     
-    for (let p = 0; p <pred_tracked.length; p++) {
-        for (let a = 0; a<actual_tracked.length; a++) {
-            if (pred_tracked[p] != 0) { // 0 indicates item has already been checked
-                if (pred_tracked[p] === actual_tracked[a]) {
-                    score[p] = 1
-                    actual_tracked.splice(a, 1, 0)
-                    break
-                }
-                else {
-                    score[p] = 0
-                }
-            }
-        }
-        pred_tracked[p] = 0 // mark that item has been checked (no impact)
-    }
+//     for (let p = 0; p <pred_tracked.length; p++) {
+//         for (let a = 0; a<actual_tracked.length; a++) {
+//             if (pred_tracked[p] != 0) { // 0 indicates item has already been checked
+//                 if (pred_tracked[p] === actual_tracked[a]) {
+//                     score[p] = 1
+//                     actual_tracked.splice(a, 1, 0)
+//                     break
+//                 }
+//                 else {
+//                     score[p] = 0
+//                 }
+//             }
+//         }
+//         pred_tracked[p] = 0 // mark that item has been checked (no impact)
+//     }
 
-    return score
+//     return score
 
-}
+// }
 
-function sortResults(score) {
-    const scoreFiltered = score.filter((i) => i>0)
-    const scoreSorted = scoreFiltered.sort()
+// function sortResults(score) {
+//     const scoreFiltered = score.filter((i) => i>0)
+//     const scoreSorted = scoreFiltered.sort()
 
-    return scoreSorted;
-}
+//     return scoreSorted;
+// }
 
-function playRound(actual, predicted) {
-    progress = scoreExact(actual, predicted)
-    score = scorePartial(progress)
-    scoreSorted = sortResults(score)
+// function playRound(actual, predicted) {
+//     progress = scoreExact(actual, predicted)
+//     score = scorePartial(progress)
+//     scoreSorted = sortResults(score)
 
-    return scoreSorted
-}
+//     return scoreSorted
+// }
 
 const game = document.querySelector("#play")
 const score_code = {1: "Partial Match", 2: "Exact Match"}
@@ -256,13 +256,15 @@ function addUserKeys() {
         choices.append(newOption)
 
         newOption.addEventListener("mouseover", function() {
-            newOption.style.width = "50px";
-            newOption.style.height = "50px";
+            // newOption.style.width = "50px";
+            // newOption.style.height = "50px";
+            newOption.style.maxWidth = "13%";
         });
 
         newOption.addEventListener("mouseout", function() {
-            newOption.style.width = "30px";
-            newOption.style.height = "30px";
+            // newOption.style.width = "30px";
+            // newOption.style.height = "30px";
+            newOption.style.maxWidth = "10%";
         });
 
     })
@@ -330,9 +332,10 @@ function initiateNewGame() {
     resetGame()
     addUserKeys()
     addRobotSelections()
+    initiateNewRound()
 
     document.getElementById("show-answer").className = "show-button"
-    document.getElementById("new-prediction").className = "show-button"
+    // document.getElementById("new-prediction").className = "show-button"
     document.getElementById("game-title").className = ""
     document.getElementById("theme").className = ""
     document.getElementById("new-game").className = "show-button"
@@ -395,6 +398,8 @@ function initiateNewRound() {
         choices.forEach(choice => {
             choice.addEventListener("click", addOptionClickEvent);
     })}
+
+    // document.querySelector("#new-prediction").className="hide-button";
 }
 
 function checkPredictions() {
@@ -439,13 +444,15 @@ function checkPredictions() {
 
         newResults.append(newResult)
     })
-
-    roundNum = resetRound()
+    
+    // document.querySelector("#new-prediction").className="show-button";
+    const roundNum = resetRound()
+    initiateNewRound()
 
     if (scoreSorted.filter(score => score === 2).length === 4) {
         winGame();
     }
-    else if (roundNum == 3) {
+    else if (roundNum == 10) {
         loseGame();
     }
 }
@@ -459,15 +466,15 @@ function resetRound() {
     submitButton.removeEventListener("click", checkPredictions)
     submitButton.className = "hide-button"
 
-    currRound = document.querySelector(".rounds")
-    prevRound = currRound.nextElementSibling
+    const currRound = document.querySelector(".rounds")
+    const prevRound = currRound.nextElementSibling
 
     if (prevRound == null) {
         roundNum = 1
     }
     else {
-        prevRoundTxt = prevRound.querySelector(".user-selections h2").textContent
-        prevRoundNum = parseInt(prevRoundTxt.slice(-1))
+        const prevRoundTxt = prevRound.querySelector(".user-selections h2").textContent
+        const prevRoundNum = parseInt(prevRoundTxt.slice(-1))
         roundNum = prevRoundNum + 1
     } 
 
@@ -489,6 +496,9 @@ function clearPredictions() {
     selections.forEach(selection => {
         selection.remove()
     })
+
+    document.querySelector("#clear-answer").className="hide-button";
+    document.querySelector("#submit-answer").className="hide-button";
 }
 
 function resetGame() {
@@ -508,7 +518,7 @@ function resetGame() {
         }            
     })
 
-    const buttonIds = ["show-answer", "new-prediction", "clear-answer", "submit-answer"]
+    const buttonIds = ["show-answer", "clear-answer", "submit-answer"]
 
     buttonIds.forEach(buttonId => {
         document.getElementById(buttonId).className="hide-button"
@@ -531,7 +541,7 @@ function showHideDropdown() {
   }
 
 function winGame() {
-    document.querySelector("#new-prediction").className="hide-button"
+    // document.querySelector("#new-prediction").className="hide-button"
     document.getElementById("show-answer").textContent = "Hide Answer"
     document.getElementById("robot-selections").className="show-answer"
 
@@ -539,7 +549,7 @@ function winGame() {
 }
 
 function loseGame() {
-    document.querySelector("#new-prediction").className="hide-button"
+    // document.querySelector("#new-prediction").className="hide-button"
     document.getElementById("show-answer").textContent = "Hide Answer"
     document.getElementById("robot-selections").className="show-answer"
 

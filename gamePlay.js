@@ -1,3 +1,4 @@
+
 function scoreExact(actual, predicted) {
     const actual_tracked = [...actual]
     const pred_tracked = [...predicted]
@@ -23,7 +24,7 @@ function scorePartial(progress) {
     
     for (let p = 0; p <pred_tracked.length; p++) {
         for (let a = 0; a<actual_tracked.length; a++) {
-            if (pred_tracked[p] > 0) { // 0 indicates item has already been checked
+            if (pred_tracked[p] != 0) { // 0 indicates item has already been checked
                 if (pred_tracked[p] === actual_tracked[a]) {
                     score[p] = 1
                     actual_tracked.splice(a, 1, 0)
@@ -36,27 +37,22 @@ function scorePartial(progress) {
         }
         pred_tracked[p] = 0 // mark that item has been checked (no impact)
     }
+
     return score
 
 }
 
-function shuffle(score) {
-    const score_shuffled = score.filter((i) => i>0)
+function sortResults(score) {
+    const scoreFiltered = score.filter((i) => i>0)
+    const scoreSorted = scoreFiltered.sort()
 
-    for (let i = score_shuffled.length - 1; i > 0; i--) {
-        // Generate a random index from 0 to i
-        const j = Math.floor(Math.random() * (i + 1));
-        // Swap elements at index i and j
-        [score_shuffled[i], score_shuffled[j]] = [score_shuffled[j], score_shuffled[i]];
-    }
-    return score_shuffled;
-
+    return scoreSorted;
 }
 
 function playRound(actual, predicted) {
     progress = scoreExact(actual, predicted)
     score = scorePartial(progress)
-    scoreShuffled = shuffle(score)
+    scoreSorted = sortResults(score)
 
-    return scoreShuffled
+    return scoreSorted
 }
