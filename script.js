@@ -102,33 +102,6 @@ function logoZoom() {
     });
 }
 
-// // Your code here
-const dodger = document.getElementById("dodger")
-
-function moveDodgerLeft() {
-        const leftNumbers = dodger.style.left.replace("px", "");
-        const left = parseInt(leftNumbers, 10);
-        
-        dodger.style.left = `${left-1}px`
-}
-
-function moveDodgerRight() {
-        const leftNumbers = dodger.style.left.replace("px", "");
-        const left = parseInt(leftNumbers, 10);
-
-        dodger.style.left = `${left+1}px`
-}
-
-function addDodgerEvents() {
-    document.addEventListener("keydown", function (event) {
-        if (event.key === 'ArrowLeft') {
-            moveDodgerLeft()}
-        else if (event.key === 'ArrowRight') {
-            moveDodgerRight()
-        } 
-    })
-}
-
 let images = ['winter', 'spring', 'fall', 'summer'];
 
 let index = 0;
@@ -154,70 +127,8 @@ document.addEventListener('scroll', function() {
     }
   });
 
-  // Game play ****************************************************************************************************
-
-// function scoreExact(actual, predicted) {
-//     const actual_tracked = [...actual]
-//     const pred_tracked = [...predicted]
-//     const score = []
-//     const progress = {'score': score, 'actual': actual_tracked, 'predicted': pred_tracked}
-    
-//     for (let p = 0; p <pred_tracked.length; p++) {
-//         if (pred_tracked[p] === actual_tracked[p]) {
-//             score[p] = 2
-//             actual_tracked.splice(p, 1, 0) //remove match from consideration for next round
-//             pred_tracked.splice(p, 1, 0) //remove match from consideration for next round
-//         }
-//         else {score[p] = 0}
-//     }
-//     return progress
-
-// }
-
-// function scorePartial(progress) {
-//     const score = progress['score']
-//     const actual_tracked = progress['actual']
-//     const pred_tracked = progress['predicted']
-    
-//     for (let p = 0; p <pred_tracked.length; p++) {
-//         for (let a = 0; a<actual_tracked.length; a++) {
-//             if (pred_tracked[p] != 0) { // 0 indicates item has already been checked
-//                 if (pred_tracked[p] === actual_tracked[a]) {
-//                     score[p] = 1
-//                     actual_tracked.splice(a, 1, 0)
-//                     break
-//                 }
-//                 else {
-//                     score[p] = 0
-//                 }
-//             }
-//         }
-//         pred_tracked[p] = 0 // mark that item has been checked (no impact)
-//     }
-
-//     return score
-
-// }
-
-// function sortResults(score) {
-//     const scoreFiltered = score.filter((i) => i>0)
-//     const scoreSorted = scoreFiltered.sort()
-
-//     return scoreSorted;
-// }
-
-// function playRound(actual, predicted) {
-//     progress = scoreExact(actual, predicted)
-//     score = scorePartial(progress)
-//     scoreSorted = sortResults(score)
-
-//     return scoreSorted
-// }
-
 const game = document.querySelector("#play")
 const score_code = {1: "Partial Match", 2: "Exact Match"}
-
-// import gameThemes from './game_themes.json';
 
 function loadGamePage() {
     const dropdown = document.getElementById("myDropdown")
@@ -258,13 +169,13 @@ function addUserKeys() {
         newOption.addEventListener("mouseover", function() {
             // newOption.style.width = "50px";
             // newOption.style.height = "50px";
-            newOption.style.maxWidth = "13%";
+            newOption.style.maxWidth = "18%";
         });
 
         newOption.addEventListener("mouseout", function() {
             // newOption.style.width = "30px";
             // newOption.style.height = "30px";
-            newOption.style.maxWidth = "10%";
+            newOption.style.maxWidth = "12%";
         });
 
     })
@@ -291,8 +202,6 @@ function addUserKeys() {
 function addRobotSelections() {
     const theme = document.querySelector("#theme").textContent
     const robotSelections = document.getElementById("robot-selections")
-    // robotSelections.style.display = "none"
-    // game.append(robotSelections)
 
     const newLabel = document.createElement("h2")
     newLabel.textContent = "Answer:"
@@ -317,12 +226,10 @@ function showHideAnswer(event) {
     curr = event.target.textContent
     if (curr === "Show Answer"){
         showAnsButton.textContent = "Hide Answer"
-        // robotSelections.style.display = "flex"}
         document.getElementById("robot-selections").className="show-answer"
     }
     else {
         showAnsButton.textContent = "Show Answer"
-        // robotSelections.style.display = "none"}
         document.getElementById("robot-selections").className=""
     }
 }
@@ -334,11 +241,13 @@ function initiateNewGame() {
     addRobotSelections()
     initiateNewRound()
 
-    document.getElementById("show-answer").className = "show-button"
-    // document.getElementById("new-prediction").className = "show-button"
+    document.getElementById("show-answer").textContent = "Show Answer"
+    document.getElementById("robot-selections").className=""
+
     document.getElementById("game-title").className = ""
     document.getElementById("theme").className = ""
     document.getElementById("myDropdown").className = ""
+    document.getElementById("show-answer").className = "show-button"    
     document.getElementById("new-game").className = "show-button"
 }
 
@@ -372,38 +281,38 @@ function addOptionClickEvent(event) {
 }
 
 function initiateNewRound() {
-    if (document.querySelectorAll("#current-round").length >0) {
-        alert("Need to finish current round before starting a new round")
-    }
 
-    else {
-        const currentRound = document.createElement("div")
-        currentRound.className = "rounds"
-        currentRound.id = "current-round"
-        // gamePlay.insertBefore(currentRound, gamePlay.firstChild);
-        const referenceElement = document.getElementById("gameplay-buttons")
-        referenceElement.insertAdjacentElement('afterend', currentRound)
-        // game.append(currentRound)
+    const currentRound = document.createElement("div")
+    currentRound.className = "rounds"
+    currentRound.id = "current-round"
+    // gamePlay.insertBefore(currentRound, gamePlay.firstChild);
+    const referenceElement = document.getElementById("gameplay-buttons")
+    referenceElement.insertAdjacentElement('afterend', currentRound)
+    // game.append(currentRound)
 
-        // const currentRound = document.querySelector("#current-round");
-        const newSelections = document.createElement("div");
-        newSelections.className = "user-selections"
-        currentRound.append(newSelections)
+    // const currentRound = document.querySelector("#current-round");
+    const newSelections = document.createElement("div");
+    newSelections.className = "user-selections"
+    currentRound.append(newSelections)
 
-        const newLabel = document.createElement("h2");
-        newLabel.textContent = "New Prediction:"
-        newSelections.append(newLabel)
+    const newLabel = document.createElement("h2");
+    newLabel.textContent = "New Prediction:"
+    newSelections.append(newLabel)
 
-        const choices = document.querySelectorAll("#user-choices img");
+    const choices = document.querySelectorAll("#user-choices img");
 
-        choices.forEach(choice => {
-            choice.addEventListener("click", addOptionClickEvent);
-    })}
-    
-    const gameContainer = document.querySelector("#game");
-    requestAnimationFrame(() => {
-        gameContainer.scrollTop = gameContainer.scrollHeight;
-    });
+    choices.forEach(choice => {
+        choice.addEventListener("click", addOptionClickEvent);       
+    })
+
+    const newResults = document.createElement("div");
+    newResults.className = "user-results"
+    currentRound.append(newResults)     
+
+    // const gameContainer = document.querySelector("#game");
+    // requestAnimationFrame(() => {
+    //     gameContainer.scrollTop = gameContainer.scrollHeight;
+    // });
 }
 
 function checkPredictions() {
@@ -429,9 +338,10 @@ function checkPredictions() {
 
     scoreSorted = playRound(actual, predicted)
 
-    const newResults = document.createElement("div");
-    newResults.className = "user-results"
-    currentRound.append(newResults)
+    // const newResults = document.createElement("div");
+    // newResults.className = "user-results"
+    // currentRound.append(newResults)
+    const newResults = document.querySelector("#current-round div.user-results");
 
     const newLabel = document.createElement("h2");
     newLabel.textContent = "Results:"
@@ -547,7 +457,6 @@ function showHideDropdown() {
   }
 
 function winGame() {
-    // document.querySelector("#new-prediction").className="hide-button"
     document.getElementById("show-answer").textContent = "Hide Answer"
     document.getElementById("robot-selections").className="show-answer"
 
@@ -555,7 +464,6 @@ function winGame() {
 }
 
 function loseGame() {
-    // document.querySelector("#new-prediction").className="hide-button"
     document.getElementById("show-answer").textContent = "Hide Answer"
     document.getElementById("robot-selections").className="show-answer"
 
@@ -564,7 +472,5 @@ function loseGame() {
 
 initializeTabs();
 addingEventListener();
-addDodgerEvents();
 logoZoom();
 loadGamePage();
-// addUserPrediction();

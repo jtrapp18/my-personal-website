@@ -11,6 +11,7 @@ body {
     margin-bottom: 60px;
     font-family: 'Candara';
     align-items: center;
+    align-content: center;
   }
 
 header {
@@ -58,6 +59,11 @@ h3 {
 h4 {
   font-size: 20px;
   color: gray;
+}
+
+a {
+  font-size: 20px;
+  color: black;
 }
 
 #intro {
@@ -184,11 +190,8 @@ footer img {
 }
 
 .game-icons {
-  position: relative;
-  /* width: 30px;
-  height: 30px; */
-  max-width: 10%;
-  /* height: auto; */
+  max-width: 12%;
+  object-fit: contain;
   margin-left: 10px;
   margin-top: 10px;
   cursor: pointer;
@@ -217,11 +220,19 @@ footer img {
   background-color: rgb(187, 185, 185);
 }
 
-#user-choices {
+#play div#user-choices, #play div#robot-selections, #play div.user-selections {
   width: 50%;
+  justify-content: right;
+  padding-right: 50px;
 }
 
-#answer-key {
+#play div#result-key, #play div.user-results {
+  width: 50%;
+  justify-content: left;
+  padding-left: 50px;
+}
+
+#play div#answer-key {
   background-color: white;
   border-bottom: 2px solid black;
 }
@@ -274,9 +285,10 @@ button {
 /* Links inside the dropdown */
 #play #myDropdown a {
   text-decoration: none;
-  display: block;
+  display: grid;
   background-color: white;
   margin: 0px;
+  align-content: center;
 }
 
 /* Change color of dropdown links on hover */
@@ -320,6 +332,11 @@ button {
   color: black;
   /* font-size: 20px; */
   font-weight: bold;
+}
+
+#play #myDropdown.opening-page a {
+  height: 50px;
+  border-bottom: .5px;
 }
 
 #play #new-game.opening-page {
