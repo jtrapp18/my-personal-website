@@ -76,7 +76,7 @@ p {
   left: 0px;
   padding: 0;
   margin: 0;
-  /* overflow: hidden; */
+  overflow: hidden;
   height: calc(100vh - 310px);
   width: 100%;
   align-items: center;
