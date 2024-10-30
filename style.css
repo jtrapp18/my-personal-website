@@ -308,13 +308,17 @@ button {
   font-size: calc(8vw);
 }
 
+.opening-page {
+  font-size: 20px;
+}
+
 #play #theme.opening-page {
   width: 200px;
   height: 50px;
   left: 0%;
   background-color: white;
   color: black;
-  font-size: 20px;
+  /* font-size: 20px; */
   font-weight: bold;
 }
 
@@ -324,7 +328,7 @@ button {
   width: 200px;
   height: 50px;
   left: calc(50% - 100px);
-  font-size: 20px;
+  /* font-size: 20px; */
   font-weight: bold;
 
 }

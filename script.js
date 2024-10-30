@@ -338,6 +338,7 @@ function initiateNewGame() {
     // document.getElementById("new-prediction").className = "show-button"
     document.getElementById("game-title").className = ""
     document.getElementById("theme").className = ""
+    document.getElementById("myDropdown").className = ""
     document.getElementById("new-game").className = "show-button"
 }
 
@@ -450,13 +451,15 @@ function checkPredictions() {
     
     // document.querySelector("#new-prediction").className="show-button";
     const roundNum = resetRound()
-    initiateNewRound()
 
     if (scoreSorted.filter(score => score === 2).length === 4) {
         winGame();
     }
     else if (roundNum == 10) {
         loseGame();
+    }
+    else {
+        initiateNewRound()
     }
 }
 
