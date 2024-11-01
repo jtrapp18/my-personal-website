@@ -15,15 +15,13 @@
                 <h3 class="minimized">I am studying to be a Full Stack Developer</h3>
             </div>
             <div class="tab-names">
-                <h2>HOME</h2>
+                <h2 class="active-tab">HOME</h2>
                 <h2>ABOUT ME</h2>
                 <h2>PROJECTS</h2>
                 <h2>PLAY</h2>
             </div>
         </header>
-        <div id="home" class="tab-content">
-            <!-- <img id="window" src="https://www.clipartmax.com/png/small/40-409138_windows-clipart-transparent-window-frame.png" alt="Windows Clipart Transparent - Window Frame @clipartmax.com"> -->
-            <!-- <img id="window" src="./img/view/window2.png" alt="window"> -->
+        <div id="home" class="tab-content active-tab">
             <img id="view" src="./img/view/winter.jpg" alt="winter view">
         </div>
         <div id="about-me" class="tab-content">
@@ -83,17 +81,9 @@
         <div id="play" class="tab-content">
             <!-- <div id="dodger" style="left: 180px;"></div> -->
             <div><h3 id="game-title" class="opening-page">PLAY GAME</h3></div>
-            <!-- <select name="document-list">
-                <option value="pan">PAN Card</option>
-                <option value="aadhar">Aadhar Card</option>
-                <option value="dl">Driving License</option>
-            </select> -->
-            <div class="opening-page dropdown">
-                <!-- <h2>Theme:</h2> -->
-                <button onclick="showHideDropdown()" id="theme" class="opening-page">Select Theme</button>
-                <div id="myDropdown" class="opening-page">
-                </div>
-              </div>
+            <select id = "theme" class="opening-page" name="theme">
+                <option value="select-theme">Select Theme</option>
+            </select>
             <div><p id="directions" class="opening-page">Directions: click on the icons below to make a new prediction</p></div>
             <button onclick="initiateNewGame()" id="new-game" class="opening-page hide-button">New Game</button>
             <button onclick="showHideAnswer(event)" id="show-answer" class="hide-button">Show Answer</button>
@@ -108,7 +98,6 @@
                 <div></div>
             </div>
             <div id="gameplay-buttons">
-                <!-- <button onclick="initiateNewRound()" id="new-prediction" class="hide-button">+ New Prediction</button> -->
                 <button onclick="clearPredictions()" id="clear-answer" class="hide-button">Clear Answer</button>
                 <button onclick="checkPredictions()" id="submit-answer" class="hide-button">Submit Answer</button>
             </div>

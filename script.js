@@ -1,27 +1,3 @@
-function initializeTabs() {
-    // Set the "Home" tab as default
-    const defaultTabName = "HOME";
-
-    // Update styles and content for the default tab
-    updateTabStyles(defaultTabName);
-    updateTabContent(defaultTabName);
-}
-
-function updateTabStyles(selectedTabName) {
-    const tabs = document.querySelectorAll('.tab-names h2');
-
-    tabs.forEach(tab => {
-        const tabName = tab.textContent;
-
-        if (tabName === selectedTabName) {
-            tab.style.textDecoration = "underline"; // Highlight the selected tab
-            tab.style.color = "black";
-        } else {
-            tab.style.textDecoration = "none"; // Reset other tabs
-            tab.style.color = "rgb(31, 49, 31)";
-        }
-    });
-}
 
 function updateTabContent(selectedTabName) {
     const tabContents = document.querySelectorAll('.tab-content');
@@ -30,9 +6,9 @@ function updateTabContent(selectedTabName) {
         const tabName = tabContent.id;
 
         if (tabName === selectedTabName.toLowerCase().replace(/ /g, "-")) {
-            tabContent.style.display = "block"; // Highlight the selected tab
+            tabContent.classList.add("active-tab");
         } else {
-            tabContent.style.display = "none"; // Reset other tabs
+            tabContent.classList.remove("active-tab");
         }
     });
 }
@@ -51,27 +27,7 @@ function addTabEvents() {
             // Add active class to the clicked tab
             tab.classList.add('active-tab');
 
-            // Call the function to update tab styles
-            updateTabStyles(tabs, tabName);
             updateTabContent(tabName)
-        });
-        
-        tab.addEventListener("mouseover", function() {
-            if (!tab.classList.contains('active-tab')) {
-                // Apply hover styles only if the tab is not active
-                tab.style.color = "rgb(188, 71, 71)";
-                tab.style.size = "40px";
-                tab.style.textDecoration = "underline";
-            }
-        });
-
-        tab.addEventListener("mouseout", function() {
-            if (!tab.classList.contains('active-tab')) {
-                // Revert hover styles only if the tab is not active
-                tab.style.color = "";
-                tab.style.size = "";
-                tab.style.textDecoration = "";
-            }
         });
     });
 }
@@ -118,7 +74,6 @@ function addScrollEvents() {
     })
 }
 
-initializeTabs();
 addTabEvents();
 addScrollEvents();
 logoZoom();

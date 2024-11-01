@@ -81,7 +81,7 @@ p {
 }
 
 #home{
-  display: flex;
+  /* display: flex; */
   left: 0px;
   padding: 0;
   margin: 0;
@@ -106,12 +106,31 @@ p {
   justify-content: center;
 }
 
+.tab-content {
+  display: none;
+}
+
+.tab-content.active-tab {
+  display: block;
+}
+
 .tab-names h2 {
   padding-left: 5%;
   padding-right: 5%;
   padding-bottom: 0px;
   margin-bottom: 0px;
   cursor: pointer;
+  text-decoration: none;
+}
+
+.tab-names h2.active-tab {
+  text-decoration: underline;
+  color: rgb(31, 49, 31);
+}
+
+.tab-names h2:hover {
+  text-decoration: underline;
+  color: rgb(188, 71, 71);
 }
 
 header.minimized .tab-names {
@@ -280,6 +299,7 @@ h3#game-title {
 /* Dropdown button on hover & focus */
 #play #theme:hover, #theme:focus {
   background-color: #dec4bb;
+  cursor: pointer;
 }
 
 /* The container <div> - needed to position the dropdown content */
